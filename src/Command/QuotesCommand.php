@@ -7,14 +7,11 @@ namespace App\Command;
 use App\Entity\Quote;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Repository\RepositoryFactory;
-use mysql_xdevapi\Result;
+use OceanApplications\currencylayer;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-Use OceanApplications\currencylayer;
 
 
 class QuotesCommand extends Command
