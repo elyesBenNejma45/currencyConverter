@@ -3,5 +3,5 @@
 #    controller: App\Controller\DefaultController::index
 
 app_display_quote:
-    path: /Quote/display
-    controller: App\Controller\QuotesController::displayQuote
+    path: /Quote/convert
+    controller: App\Controller\QuotesController::convertQuote

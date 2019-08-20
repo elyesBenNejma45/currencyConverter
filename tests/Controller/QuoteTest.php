@@ -11,7 +11,7 @@ class QuoteTest extends WebTestCase
     public function showQuoteTest()
     {
         $client = static::createClient();
-        $client->request('GET', '/Quote/display');
+        $client->request('GET', '/Quote/convert');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
 }

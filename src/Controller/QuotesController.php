@@ -5,7 +5,9 @@ namespace App\Controller;
 use App\Entity\Quote;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
+use http\Env\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -23,13 +25,21 @@ class QuotesController extends AbstractController
     }
 
     /**
-     * @Route("/Quotes", name="create_quotes")
+     * @Route("/Quotes", name="convert_quotes")
      */
-    public function displayQuote()
+    public function convertQuote(RequestStack $requestStack)
     {
-        /** @var EntityRepository $repository */
-        $repository = $this->container->get('doctrine')->getRepository(Quote::class);
-        $quotes = $repository->findAll();
-        return $this->render('quote.html.twig', ['quotes' => $quotes]);
+
+        $request = $requestStack->getCurrentRequest();
+        $euroAmont = $request->get('amount');
+        $convertedAmount = 0;
+        if (!empty($euroAmont)){
+            /** @var EntityRepository $repository */
+            $repository = $this->container->get('doctrine')->getRepository(Quote::class);
+            /** @var Quote $quote */
+            $quote = $repository->findOneBy(array('currency' => $request->get('currency')));
+            $convertedAmount = $euroAmont * $quote->getAmount();
+        }
+        return $this->render('quote.html.twig', ['quote' => $convertedAmount, 'amount' => $euroAmont, 'currency' => $request->get('currency')]);
     }
 }
