@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0d2b66629fa28f899b622acba81f29bc",
+    "content-hash": "9b3c5fecc34e822151eefaf16f3664f5",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1254,6 +1254,42 @@
                 "sql"
             ],
             "time": "2014-01-12T16:20:24+00:00"
+        },
+        {
+            "name": "oceanapplications/currencylayer-php-client",
+            "version": "1.4.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/oceanapplications/currencylayer-php-client.git",
+                "reference": "79a0a5e7fe51a49a1617b99a12eec663b3a5be89"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/oceanapplications/currencylayer-php-client/zipball/79a0a5e7fe51a49a1617b99a12eec663b3a5be89",
+                "reference": "79a0a5e7fe51a49a1617b99a12eec663b3a5be89",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "OceanApplications\\currencylayer\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ocean Applications",
+                    "email": "oceanapplications@gmail.com"
+                }
+            ],
+            "description": "Currencylayer API PHP client",
+            "keywords": [
+                "currencylayer"
+            ],
+            "time": "2017-11-14T20:39:12+00:00"
         },
         {
             "name": "ocramius/package-versions",

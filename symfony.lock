@@ -84,6 +84,9 @@
     "nikic/php-parser": {
         "version": "v4.2.3"
     },
+    "oceanapplications/currencylayer-php-client": {
+        "version": "1.4.4"
+    },
     "ocramius/package-versions": {
         "version": "1.4.0"
     },
