@@ -1,0 +1,4 @@
+@import "quotes.scss";
+body {
+    background-color: lightgray;
+}
