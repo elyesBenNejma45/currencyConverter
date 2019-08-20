@@ -8,11 +8,14 @@ use App\Entity\Quote;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Repository\RepositoryFactory;
+use mysql_xdevapi\Result;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+Use OceanApplications\currencylayer;
+
 
 class QuotesCommand extends Command
 {
@@ -56,21 +59,26 @@ class QuotesCommand extends Command
             $entityManager->flush();
         }
         $output->writeln("quotes deleted");
-        $strJsonFileContents = file_get_contents("http://www.apilayer.net/api/live?access_key=48e7038235f8cb33c574f60f19fa5285&format=1");
-        $project = json_decode($strJsonFileContents,true);
-        $quot = $project["quotes"];
-        foreach ($quot as $key => $value)
-        {
-            $quote = new Quote();
-            $quote->setCurrency($key);
-            $quote->setAmount($value);
-            // tell Doctrine you want to (eventually) save the quote (no queries yet)
-            $entityManager->persist($quote);
+        $currencyLayer = new currencylayer\client('48e7038235f8cb33c574f60f19fa5285');
+        $result = $currencyLayer
+            ->source('USD')
+            ->currencies('CHF,EUR')
+            ->amount('1')
+            ->live();
 
-            // actually executes the queries (i.e. the INSERT query)
-            $entityManager->flush();
-        }
-        $output->writeln("quotes added");
+        $euroToUsd = 1/$result['quotes']['USDEUR'];
+        $quoteUsd = new Quote();
+        $quoteUsd->setCurrency('USD');
+        $quoteUsd->setAmount($euroToUsd);
+        $entityManager->persist($quoteUsd);
+        $entityManager->flush();
+
+        $euroToChf = $euroToUsd * $result['quotes']['USDCHF'];
+        $quoteChf = new Quote();
+        $quoteChf->setCurrency('CHF');
+        $quoteChf->setAmount($euroToChf);
+        $entityManager->persist($quoteChf);
+        $entityManager->flush();
+        $output->writeln("quotes Created");
     }
-
 }
